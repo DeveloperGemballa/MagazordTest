@@ -14,14 +14,36 @@ OBS: e github para baixar o projeto
 
 ### Configuração do ambiente
 
-- PHP 7.4 ou superior
-- Composer
+- Clone o repositório: https://github.com/DeveloperGemballa/MagazordTest.git
+- Entre no diretório do projeto: cd MagazordTest
+- Instale as dependências: composer install
+- cp .env.example .env
+- Configure as variáveis de ambiente no arquivo .env:   DB_DATABASE=magazord
+                                                        DB_USERNAME=root
+                                                        DB_PASSWORD=
+- Gere uma nova chave para a aplicação: php artisan key:generate
+- Rode as migrações: php artisan migrate
+- Inicie o servidor de desenvolvimento: php artisan serve
+
+
+## Uso
+
+O sistema tem o cadastro disponível para dois itens, sendo eles os contatos e as pessoas, onde uma pessoa pode ter vários contatos. O sistema faz a verificação de dados como CPF e retorna a validação gerando uma mensagem de erro ou de sucesso dependendo do conteúdo, ao salvar ele o leva para a página inicial de seu respectivo cadastro para visualizar o cadastro feito, sendo que também há uma caixa de pesquisa que procura por itens semelhantes ao que foi digitado em cada um dos cadastros. Há a opção de excluir ou editar um cadastro já existente que também fazem validação para o conteúdo informado.
+
+# Tecnologias utilizadas
+
+- Laravel
+- googleAPIS
 - MySQL
+- Bootstrap
+- JQuery
 
-## Contributing
+# Autor
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Matheus Gemballa Gullini
+- contato: [+55(47)98830-2840] -> também Whatsapp
+- e-mail: matheusgemballagullini07@gmail.com
 
-## License
+## Licença
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
