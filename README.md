@@ -14,10 +14,11 @@ OBS: e github para baixar o projeto
 
 ### Configuração do ambiente
 
-- Clone o repositório: https://github.com/DeveloperGemballa/MagazordTest.git
+- Abra o CMD e acesse a pasta onde deseja instalar o projeto
+- Clone o repositório: git clone https://github.com/DeveloperGemballa/MagazordTest.git
 - Entre no diretório do projeto: cd MagazordTest
 - Instale as dependências: composer install
-- cp .env.example .env
+- Crie o arquivo .env a partir do exemplo: cp .env.example .env
 - Configure as variáveis de ambiente no arquivo .env:   DB_DATABASE=magazord
                                                         DB_USERNAME=root
                                                         DB_PASSWORD=
