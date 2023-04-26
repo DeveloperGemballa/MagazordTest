@@ -48,3 +48,7 @@ O sistema tem o cadastro disponível para dois itens, sendo eles os contatos e a
 ## Licença
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+### Erros encontrados por: Matheus Gemballa Gullini(autor)
+
+- A arquitetura MVC foi interpretada errada e foi preciso alterações para corrigir, nada cujo autor declarou difícil
