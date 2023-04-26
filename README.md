@@ -51,4 +51,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ### Erros encontrados por: Matheus Gemballa Gullini(autor)
 
-- A arquitetura MVC foi interpretada errada e foi preciso alterações para corrigir, nada cujo autor declarou difícil
+- A arquitetura MVC foi interpretada errada e foi necessárias alterações para corrigir.
