@@ -8,8 +8,36 @@ use Illuminate\Database\Eloquent\Model;
 class Pessoas extends Model
 {
     use HasFactory;
-    public function confereNome($nome)
-    {
+    public static function buscar($conteudoPesquisa) {
+        return self::where('nomePessoa', 'LIKE', '%'.$conteudoPesquisa.'%')
+                   ->orWhere('CPFpessoa', 'LIKE', '%'.$conteudoPesquisa.'%')
+                   ->get();
+    }
+    public static function salvarPessoa($nome, $cpf) {
+        $pessoas = new Pessoas();
+        $pessoas->nomePessoa = $nome;
+        $pessoas->CPFpessoa = $cpf;
+        $pessoas->save();
+        return $pessoas->id;
+    }
+    public static function atualizarPessoa($id, $nome, $cpf) {
+        $pessoas = Pessoas::find($id);
+        $pessoas->nomePessoa = $nome;
+        $pessoas->CPFpessoa = $cpf;
+        $pessoas->save();
+        if($pessoas->save()) {
+            return true;
+        }
+    }
+    public static function excluirPessoa($id) {
+        $pessoa = Pessoas::find($id);
+        if ($pessoa) {
+            $pessoa->delete();
+            return true;
+        }
+        return false;
+    }
+    public function confereNome($nome){
         if($nome == " " || mb_strlen($nome) < 5) {
             return [
                 false
@@ -20,8 +48,7 @@ class Pessoas extends Model
             ];
         }
     }
-    public function confereCpf($cpf)
-    {
+    public function confereCpf($cpf){
         if(empty($cpf)) {
             return [
                 false

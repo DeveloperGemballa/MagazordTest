@@ -13,40 +13,40 @@ class pessoasController extends Controller
         return view('pessoas.pessoas',array('pessoas' => $pessoas));
     }
     public function buscar(Request $request) {
-        $pessoas = Pessoas::where('nomePessoa', 'LIKE', '%'.$request->input('conteudoPesquisa').'%')
-        ->orWhere('CPFpessoa', 'LIKE', '%'.$request->input('conteudoPesquisa').'%')
-        ->get();
+        $$pessoas = Pessoas::buscar($request->input('conteudoPesquisa'));
         return view('pessoas.pessoas',array('pessoas' => $pessoas,'busca'=>$request->input('conteudoPesquisa')));
     }
-    public function create()
-    {
+    public function create(){
         return view('pessoas.cadastroPessoas');
     }
     public function store(Request $request)
     {
-        
-        
-        $pessoas = new Pessoas();
         $resultadoNome = Pessoas::confereNome($request->input('name'));
         $resultadoCpf = Pessoas::confereCpf($request->input('cpf'));
-        $pessoas->nomePessoa = $request->input('name');
-        $pessoas->CPFpessoa = $request->input('cpf');
+
         if (in_array(false, $resultadoNome) || in_array(false, $resultadoCpf)) {
             // Se alguma validação falhar
             Session::flash('mensagem', 'Por favor, informe um cadastro válido!');
             return redirect()->back();
         }
-        if($pessoas->save()) {
+
+        $id = Pessoas::salvarPessoa($request->input('name'), $request->input('cpf'));
+        if ($id) {
             // Se todas as validações passarem e o objeto for salvo
             Session::flash('mensagem', 'Cadastro salvo!');
             return redirect(url("pessoas/"));
         }
-        
+
+        return redirect()->back()->withInput();
     }
+
     public function destroy($id)
     {
-        $pessoas = Pessoas::find($id);
-        $pessoas -> delete();
+        if (Pessoas::excluirPessoa($id)) {
+            Session::flash('mensagem', 'Cadastro excluído!');
+        } else {
+            Session::flash('mensagem', 'Não foi possível excluir o cadastro!');
+        }
         return redirect(url("pessoas/"));
     }
     public function edit($id)
@@ -56,20 +56,22 @@ class pessoasController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $pessoas = Pessoas::find($id);
         $resultadoNome = Pessoas::confereNome($request->input('name'));
         $resultadoCpf = Pessoas::confereCpf($request->input('cpf'));
-        $pessoas->nomePessoa = $request->input('name');
-        $pessoas->CPFpessoa = $request->input('cpf');
+
         if (in_array(false, $resultadoNome) || in_array(false, $resultadoCpf)) {
             // Se alguma validação falhar
             Session::flash('mensagem', 'Por favor, informe um cadastro válido!');
             return redirect()->back();
         }
-        if($pessoas->save()) {
+
+        $id = Pessoas::atualizarPessoa($id,$request->input('name'), $request->input('cpf'));
+        if ($id) {
             // Se todas as validações passarem e o objeto for salvo
             Session::flash('mensagem', 'Cadastro salvo!');
             return redirect(url("pessoas/"));
         }
+
+        return redirect()->back()->withInput();
     }
 }

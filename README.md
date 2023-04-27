@@ -1,5 +1,4 @@
-
-## Magazord BackEnd TEST
+# Magazord BackEnd TEST
 
 Este projeto tem como base ser uma avaliação de desempenho e de habilidades com o backend para entrar na equipe magazord e contribuir com a empresa! O projeto é um sistema simples que usa o gerenciador de dependências "Composer" e o padrão "MVC" (Model, View & Controller). O sistema tem 2 CRUDs sendo eles: o CRUD de contatos e o de pessoas que se relacionam tendo assim um banco de dados relacional. O projeto dá opções de salvar, editar e excluir cadastros tanto de pessoas como de contatos.
 
@@ -48,3 +47,7 @@ O sistema tem o cadastro disponível para dois itens, sendo eles os contatos e a
 ## Licença
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+### Erros encontrados por: Matheus Gemballa Gullini(autor)
+
+- A arquitetura MVC foi interpretada errada e foi necessárias alterações para corrigir.

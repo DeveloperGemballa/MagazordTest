@@ -20,9 +20,7 @@ class contatosController extends Controller
         return view('contatos.contatos',array('contatos' => $contatos, 'pessoas' => $pessoas));
     }
     public function buscar(Request $request) {
-        $contatos = contatos::where('tipoContato', 'LIKE', '%'.$request->input('conteudoPesquisa').'%')
-        ->orWhere('descricaoContato', 'LIKE', '%'.$request->input('conteudoPesquisa').'%')
-        ->get();
+        $contatos = Contatos::buscar($request->input('conteudoPesquisa'));
         return view('contatos.contatos',array('contatos' => $contatos,'busca'=>$request->input('conteudoPesquisa')));
     }
     /**
@@ -44,40 +42,19 @@ class contatosController extends Controller
      */
     public function store(Request $request)
     {
-        $contatos = new contatos();
-        $resultadoDescricao = contatos::confereDescricao($request->input('descricao'));
-        $contatos->codigoPessoa = $request->input('codP');
-        $contatos->tipoContato = $request->input('tipo');
-        $contatos->descricaoContato = $request->input('descricao');
+        $resultadoDescricao = Contatos::confereDescricao($request->input('descricao'));
         if (in_array(false, $resultadoDescricao)) {
-            // Se alguma validação falhar
+            // Se a validação falhar
             Session::flash('mensagem', 'Por favor, informe um cadastro válido!');
             return redirect()->back();
         }
-        if($contatos->save()) {
+        $id = contatos::criarContato($request->input('codP'), $request->input('tipo'), $request->input('descricao'));
+        if ($id) {
             // Se todas as validações passarem e o objeto for salvo
             Session::flash('mensagem', 'Cadastro salvo!');
             return redirect(url("contatos/"));
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $contatos = contatos::find($id);
@@ -94,17 +71,14 @@ class contatosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $contatos = Contatos::find($id);
-        $resultadoDescricao = contatos::confereDescricao($request->input('descricao'));
-        $contatos->codigoPessoa = $request->input('codP');
-        $contatos->tipoContato = $request->input('tipo');
-        $contatos->descricaoContato = $request->input('descricao');
-        if (in_array(false, $resultadoDescricao)) {
-            // Se alguma validação falhar
+        $resultadoDescricao = Contatos::confereDescricao($request->input('descricao'));
+        if(in_array(false, $resultadoDescricao)) {
+            // Se a validação falhar
             Session::flash('mensagem', 'Por favor, informe um cadastro válido!');
             return redirect()->back();
         }
-        if($contatos->save()) {
+        $id = contatos::atualizarContato($id,$request->input('codP'), $request->input('tipo'), $request->input('descricao'));
+        if($id) {
             // Se todas as validações passarem e o objeto for salvo
             Session::flash('mensagem', 'Cadastro salvo!');
             return redirect(url("contatos/"));
